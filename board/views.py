@@ -3,6 +3,15 @@ from django.shortcuts import render
 # Create your views here.
 from django.db import connection
 import sqlite3
+from pymongo import MongoClient
+
+def listwithmongo(request):
+    data = request.GET.copy()
+    with MongoClient('mongodb://127.0.0.1:27017/') as client:
+        mydb = client.mydb
+        result = list(mydb.economic.find({}))
+        data['page_obj'] = result
+    return render(request, 'board/listwithmongo.html', context=data)
 
 def listwithrawquery(request):
     data = request.GET.copy()
@@ -44,21 +53,22 @@ def listwithrawquerywithpaginator(request):
 
 from pymongo import MongoClient
 from board.mongopaginator import MongoPaginator
-def listwithmongo(request):
-    data = request.GET.copy()
-    with MongoClient('mongodb://10.0.0.5:27017/')  as client:
-        mydb = client.mydb
-        result = list(mydb.economic.find({}))			# get Collection with find()
+
+# def listwithmongo(request):
+#     data = request.GET.copy()
+#     with MongoClient('mongodb://10.0.0.5:27017/')  as client:
+#         mydb = client.mydb
+#         result = list(mydb.economic.find({}))			# get Collection with find()
         
-        result_page = []
-        for info in result:						# Cursor
-            # del info(_id)
-            temp = {'title':info['title'], 'link':info['link']}
-            result_page.append(temp)
-            print(type(info), info)
-        data['page_obj'] = result
+#         result_page = []
+#         for info in result:						# Cursor
+#             # del info(_id)
+#             temp = {'title':info['title'], 'link':info['link']}
+#             result_page.append(temp)
+#             print(type(info), info)
+#         data['page_obj'] = result
         
-    return render(request, 'board/listwithmongo.html', context=data)
+#     return render(request, 'board/listwithmongo.html', context=data)
 
 def listwithmongowithpaginator(request):
     data = request.GET.copy()
@@ -78,3 +88,27 @@ def listwithmongowithpaginator(request):
         print(f"{row['title']}, {row['link']}")
 
     return render(request, 'board/listwithrawquerywithpaginator.html', context=data)
+
+
+
+# 구름 새터미널에서 mongod 입력
+# 위에 goormide 옆에 window에서 new terminal window 선택
+# mongo 입력
+# show dbs
+# new terminal window 하나 더 만든다
+# ls 하고 cd datas/ 들어가서 ls 확인
+# python3 ./scrapingandinsertmongo.py 입력하면 에러가 날 텐데
+# pip3 install -U pip pymongo
+# pip3 install -U pip bs4
+# python3 ./scrapingandinsertmongo.py
+
+#두번째 터미널에서 
+# show mydb 
+# show collections 
+# economic.find 하는거 
+
+
+
+# 구름 장고 gui
+# 실행하면 에러가 뜰텐데 migrate && 까지 삭제해준다
+# 실행하고 url 카피해서 board/listwithmongo 붙여줘서 브라우저에서 연다

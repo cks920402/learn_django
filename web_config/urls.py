@@ -33,4 +33,5 @@ urlpatterns = [
     path("board/listwithrawquerywithpaginator/", boardview.listwithrawquerywithpaginator, name="listwithrawquerywithpaginator"),				# add
     path("board/listwithmongo/", boardview.listwithmongo, name="listwithmongo"),				# add
     path("board/listwithmongowithpaginator/", boardview.listwithmongowithpaginator, name="listwithmongowithpaginator"),				# add
+    path("board/listwithmongo/", boardview.listwithmongo),				
 ]
