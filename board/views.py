@@ -7,7 +7,7 @@ from pymongo import MongoClient
 
 def listwithmongo(request):
     data = request.GET.copy()
-    with MongoClient('mongodb://127.0.0.1:27017/') as client:
+    with MongoClient('mongodb://172.17.0.2:27017/') as client:
         mydb = client.mydb
         result = list(mydb.economic.find({}))
         data['page_obj'] = result
@@ -112,3 +112,6 @@ def listwithmongowithpaginator(request):
 # 구름 장고 gui
 # 실행하면 에러가 뜰텐데 migrate && 까지 삭제해준다
 # 실행하고 url 카피해서 board/listwithmongo 붙여줘서 브라우저에서 연다
+
+
+
