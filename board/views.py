@@ -5,6 +5,13 @@ from django.db import connection
 import sqlite3
 from pymongo import MongoClient
 
+def ddata(request):
+    data = request.GET.copy()
+    with MongoClient("mongodb://172.17.0.3:27017/") as client:
+        result = list(client.ddb.ddetail.find({}))
+        data['page_obj'] = result
+    return render(request, 'board/ddata.html', context=data)
+
 def listwithmongo(request):
     data = request.GET.copy()
     with MongoClient('mongodb://172.17.0.2:27017/') as client:
@@ -90,7 +97,13 @@ def listwithmongowithpaginator(request):
     return render(request, 'board/listwithrawquerywithpaginator.html', context=data)
 
 
-
+# 구름 새컨테이너 생성
+# 이름 learn_django1
+# 지역 서울
+# 공개 private
+# 템플릿 깃허브
+# 소프트웨어 장고
+# 추가모듈 몽고디비설치 선택
 # 구름 새터미널에서 mongod 입력
 # 위에 goormide 옆에 window에서 new terminal window 선택
 # mongo 입력
