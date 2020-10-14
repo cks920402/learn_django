@@ -104,6 +104,7 @@ def listwithmongowithpaginator(request):
 # 템플릿 깃허브
 # 소프트웨어 장고
 # 추가모듈 몽고디비설치 선택
+
 # 구름 새터미널에서 mongod 입력
 # 위에 goormide 옆에 window에서 new terminal window 선택
 # mongo 입력
